@@ -36,8 +36,8 @@ const Store = () => {
     {
       id: 1,
       name: "Premium Hair Pomade",
-      price: 24.99,
-      originalPrice: 29.99,
+      price: 1374.45,
+      originalPrice: 1649.34,
       image: "/api/placeholder/300/300",
       category: "hair",
       brand: "Ashu's Collection",
@@ -50,7 +50,7 @@ const Store = () => {
     {
       id: 2,
       name: "Beard Oil - Sandalwood",
-      price: 18.99,
+      price: 1044.45,
       image: "/api/placeholder/300/300",
       category: "beauty",
       brand: "Gentleman's Choice",
@@ -62,7 +62,7 @@ const Store = () => {
     {
       id: 3,
       name: "Classic Barber Comb",
-      price: 12.99,
+      price: 714.45,
       image: "/api/placeholder/300/300",
       category: "fashion",
       brand: "Vintage Tools",
@@ -74,8 +74,8 @@ const Store = () => {
     {
       id: 4,
       name: "Hair Wax - Strong Hold",
-      price: 19.99,
-      originalPrice: 24.99,
+      price: 1099.45,
+      originalPrice: 1374.45,
       image: "/api/placeholder/300/300",
       category: "hair",
       brand: "Style Master",
@@ -87,7 +87,7 @@ const Store = () => {
     {
       id: 5,
       name: "Aftershave Balm",
-      price: 16.99,
+      price: 934.45,
       image: "/api/placeholder/300/300",
       category: "beauty",
       brand: "Smooth Skin",
@@ -99,7 +99,7 @@ const Store = () => {
     {
       id: 6,
       name: "Vintage Leather Toiletry Bag",
-      price: 45.99,
+      price: 2529.45,
       image: "/api/placeholder/300/300",
       category: "fashion",
       brand: "Heritage Craft",

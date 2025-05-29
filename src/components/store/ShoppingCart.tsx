@@ -56,7 +56,7 @@ const ShoppingCart = ({ isOpen, onClose, items, onUpdateQuantity }: ShoppingCart
                       <div className="flex-1">
                         <h3 className="font-medium text-sm">{item.product.name}</h3>
                         <p className="text-xs text-gray-500">{item.product.brand}</p>
-                        <p className="text-sm font-semibold">${item.product.price}</p>
+                        <p className="text-sm font-semibold">{item.product.price.toFixed(2)} ETB</p>
                         
                         <div className="flex items-center space-x-2 mt-2">
                           <Button
@@ -95,7 +95,7 @@ const ShoppingCart = ({ isOpen, onClose, items, onUpdateQuantity }: ShoppingCart
             <div className="border-t p-4 space-y-4">
               <div className="flex justify-between items-center">
                 <span className="font-medium">Total ({itemCount} items)</span>
-                <span className="text-xl font-bold">${total.toFixed(2)}</span>
+                <span className="text-xl font-bold">{total.toFixed(2)} ETB</span>
               </div>
               
               <Button className="w-full bg-orange-600 hover:bg-orange-700" size="lg">
