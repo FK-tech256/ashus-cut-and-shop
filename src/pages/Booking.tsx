@@ -1,345 +1,244 @@
+
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Calendar, Clock, User, Phone, Mail, MapPin, CheckCircle } from "lucide-react";
-
-interface Service {
-  name: string;
-  price: string;
-  duration: string;
-  popular?: boolean;
-}
+import { Calendar, Clock, User, CreditCard, CheckCircle } from "lucide-react";
 
 const Booking = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [step, setStep] = useState(1);
+  const [selectedService, setSelectedService] = useState<any>(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [customerInfo, setCustomerInfo] = useState({
-    name: "",
-    email: "",
-    phone: ""
-  });
+  const [selectedBarber, setSelectedBarber] = useState("");
 
-  const services: Service[] = [
-    { name: "Classic Haircut", price: "$25", duration: "30 min" },
-    { name: "Premium Cut & Style", price: "$35", duration: "45 min", popular: true },
-    { name: "Beard Trim & Shape", price: "$20", duration: "25 min" },
-    { name: "The Full Service", price: "$50", duration: "60 min", popular: true },
-    { name: "Hot Towel Shave", price: "$30", duration: "40 min" },
-    { name: "Kids Haircut", price: "$18", duration: "25 min" }
+  const services = [
+    { id: 1, name: "Classic Haircut", price: 824.50, duration: "30-45 min" },
+    { id: 2, name: "Beard Trim & Shape", price: 549.50, duration: "20-30 min" },
+    { id: 3, name: "Premium Full Service", price: 1374.50, duration: "60-75 min" },
+    { id: 4, name: "Kids Haircut", price: 659.50, duration: "20-30 min" },
+    { id: 5, name: "Hot Towel Shave", price: 934.50, duration: "30-40 min" },
+    { id: 6, name: "Hair Styling", price: 714.50, duration: "20-30 min" }
+  ];
+
+  const barbers = [
+    { id: 1, name: "Ashu", specialty: "Classic Cuts & Styling", experience: "10+ years" },
+    { id: 2, name: "Mike", specialty: "Beard Specialist", experience: "8+ years" },
+    { id: 3, name: "David", specialty: "Modern Styles", experience: "6+ years" }
   ];
 
   const timeSlots = [
     "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-    "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
-    "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM",
-    "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM"
+    "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
   ];
 
-  const nextStep = () => setCurrentStep(prev => prev + 1);
-  const prevStep = () => setCurrentStep(prev => prev - 1);
-
-  const handleServiceSelect = (service: Service) => {
-    setSelectedService(service);
-    nextStep();
-  };
-
-  const handleDateTimeSelect = () => {
-    if (selectedDate && selectedTime) {
-      nextStep();
-    }
-  };
-
-  const handleBookingSubmit = () => {
-    // Handle booking submission logic here
-    nextStep();
-  };
+  const nextStep = () => setStep(step + 1);
+  const prevStep = () => setStep(step - 1);
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-700 to-blue-900 text-white py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Book Your Appointment</h1>
-          <p className="text-xl text-blue-100">
-            Follow these simple steps to schedule your visit with us
-          </p>
+      <section className="bg-gradient-to-br from-blue-700 to-blue-900 text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Book Your Appointment</h1>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              Schedule your grooming session in just a few simple steps
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Progress Indicator */}
-      <section className="py-8 bg-white border-b">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            {[1, 2, 3, 4].map((step) => (
-              <div key={step} className="flex items-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Progress Indicator */}
+        <div className="mb-8">
+          <div className="flex items-center justify-center space-x-4">
+            {[1, 2, 3, 4].map((num) => (
+              <div key={num} className="flex items-center">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                  currentStep >= step ? 'bg-blue-700 text-white' : 'bg-gray-200 text-gray-600'
+                  step >= num ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
                 }`}>
-                  {currentStep > step ? <CheckCircle className="w-6 h-6" /> : step}
+                  {step > num ? <CheckCircle className="w-6 h-6" /> : num}
                 </div>
-                {step < 4 && (
-                  <div className={`w-16 md:w-24 h-1 ${
-                    currentStep > step ? 'bg-blue-700' : 'bg-gray-200'
-                  }`}></div>
+                {num < 4 && (
+                  <div className={`w-16 h-1 mx-2 ${
+                    step > num ? 'bg-blue-600' : 'bg-gray-200'
+                  }`} />
                 )}
               </div>
             ))}
           </div>
-          <div className="flex justify-between mt-2 text-sm text-gray-600">
-            <span>Service</span>
-            <span>Date & Time</span>
-            <span>Contact Info</span>
-            <span>Confirmation</span>
+          <div className="flex justify-center mt-4">
+            <span className="text-sm text-gray-600">
+              Step {step} of 4: {
+                step === 1 ? 'Select Service' :
+                step === 2 ? 'Choose Date & Time' :
+                step === 3 ? 'Select Barber' :
+                'Confirm & Pay'
+              }
+            </span>
           </div>
         </div>
-      </section>
 
-      {/* Booking Steps */}
-      <section className="py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Step Content */}
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center text-2xl">
+              {step === 1 && <><User className="mr-2" /> Select Your Service</>}
+              {step === 2 && <><Calendar className="mr-2" /> Choose Date & Time</>}
+              {step === 3 && <><User className="mr-2" /> Select Your Barber</>}
+              {step === 4 && <><CreditCard className="mr-2" /> Confirm & Payment</>}
+            </CardTitle>
+          </CardHeader>
           
-          {/* Step 1: Service Selection */}
-          {currentStep === 1 && (
-            <Card className="shadow-xl border-0">
-              <CardHeader className="bg-blue-700 text-white">
-                <CardTitle className="text-2xl">Step 1: Choose Your Service</CardTitle>
-              </CardHeader>
-              <CardContent className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {services.map((service, index) => (
-                    <div
-                      key={index}
-                      onClick={() => handleServiceSelect(service)}
-                      className="relative p-6 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-blue-500 transition-colors"
-                    >
-                      {service.popular && (
-                        <Badge className="absolute -top-2 -right-2 bg-orange-600 text-white">
-                          Popular
-                        </Badge>
-                      )}
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">{service.name}</h3>
-                          <p className="text-gray-600 mt-1">{service.duration}</p>
-                        </div>
-                        <div className="text-2xl font-bold text-blue-700">{service.price}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Step 2: Date & Time Selection */}
-          {currentStep === 2 && selectedService && (
-            <Card className="shadow-xl border-0">
-              <CardHeader className="bg-blue-700 text-white">
-                <CardTitle className="text-2xl">Step 2: Select Date & Time</CardTitle>
-              </CardHeader>
-              <CardContent className="p-8">
-                <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                  <p className="text-blue-800">
-                    <strong>Selected Service:</strong> {selectedService.name} - {selectedService.price} ({selectedService.duration})
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Select Date
-                    </label>
-                    <input
-                      type="date"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Available Times
-                    </label>
-                    <div className="grid grid-cols-3 gap-2 max-h-60 overflow-y-auto">
-                      {timeSlots.map((time) => (
-                        <button
-                          key={time}
-                          onClick={() => setSelectedTime(time)}
-                          className={`px-3 py-2 text-sm rounded-md border transition-colors ${
-                            selectedTime === time
-                              ? "bg-blue-700 text-white border-blue-700"
-                              : "bg-white text-gray-700 border-gray-300 hover:bg-blue-50"
-                          }`}
-                        >
-                          {time}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex justify-between mt-8">
-                  <Button onClick={prevStep} variant="outline">
-                    Back
-                  </Button>
-                  <Button 
-                    onClick={handleDateTimeSelect}
-                    disabled={!selectedDate || !selectedTime}
-                    className="bg-blue-700 hover:bg-blue-800"
+          <CardContent>
+            {/* Step 1: Service Selection */}
+            {step === 1 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {services.map((service) => (
+                  <div
+                    key={service.id}
+                    onClick={() => setSelectedService(service)}
+                    className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                      selectedService?.id === service.id
+                        ? 'border-blue-600 bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
                   >
-                    Continue
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Step 3: Contact Information */}
-          {currentStep === 3 && selectedService && (
-            <Card className="shadow-xl border-0">
-              <CardHeader className="bg-blue-700 text-white">
-                <CardTitle className="text-2xl">Step 3: Contact Information</CardTitle>
-              </CardHeader>
-              <CardContent className="p-8">
-                <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                  <p className="text-blue-800">
-                    <strong>Booking Summary:</strong> {selectedService.name} on {selectedDate} at {selectedTime}
-                  </p>
-                </div>
-
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={customerInfo.name}
-                      onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
-                      placeholder="Enter your full name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                    <h3 className="font-semibold text-lg">{service.name}</h3>
+                    <p className="text-gray-600">{service.duration}</p>
+                    <p className="text-xl font-bold text-blue-600">{service.price.toFixed(2)} ETB</p>
                   </div>
+                ))}
+              </div>
+            )}
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      value={customerInfo.email}
-                      onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
-                      placeholder="Enter your email address"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      value={customerInfo.phone}
-                      onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
-                      placeholder="Enter your phone number"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+            {/* Step 2: Date & Time Selection */}
+            {step === 2 && (
+              <div className="space-y-6">
+                <div>
+                  <Label htmlFor="date">Select Date</Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
+                  />
+                </div>
+                
+                <div>
+                  <Label>Select Time</Label>
+                  <div className="grid grid-cols-3 md:grid-cols-4 gap-3 mt-2">
+                    {timeSlots.map((time) => (
+                      <Button
+                        key={time}
+                        variant={selectedTime === time ? "default" : "outline"}
+                        onClick={() => setSelectedTime(time)}
+                        className="w-full"
+                      >
+                        {time}
+                      </Button>
+                    ))}
                   </div>
                 </div>
+              </div>
+            )}
 
-                <div className="flex justify-between mt-8">
-                  <Button onClick={prevStep} variant="outline">
-                    Back
-                  </Button>
-                  <Button 
-                    onClick={handleBookingSubmit}
-                    disabled={!customerInfo.name || !customerInfo.email || !customerInfo.phone}
-                    className="bg-orange-600 hover:bg-orange-700"
+            {/* Step 3: Barber Selection */}
+            {step === 3 && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {barbers.map((barber) => (
+                  <div
+                    key={barber.id}
+                    onClick={() => setSelectedBarber(barber.name)}
+                    className={`p-6 border-2 rounded-lg cursor-pointer transition-all text-center ${
+                      selectedBarber === barber.name
+                        ? 'border-blue-600 bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
                   >
-                    Confirm Booking
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Step 4: Confirmation */}
-          {currentStep === 4 && selectedService && (
-            <Card className="shadow-xl border-0">
-              <CardHeader className="bg-green-600 text-white">
-                <CardTitle className="text-2xl flex items-center">
-                  <CheckCircle className="w-6 h-6 mr-2" />
-                  Booking Confirmed!
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-8">
-                <div className="text-center mb-8">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="w-8 h-8 text-green-600" />
+                    <div className="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4"></div>
+                    <h3 className="font-semibold text-lg">{barber.name}</h3>
+                    <p className="text-gray-600 text-sm">{barber.specialty}</p>
+                    <Badge variant="secondary" className="mt-2">{barber.experience}</Badge>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    Your appointment has been confirmed!
-                  </h3>
-                  <p className="text-gray-600">
-                    We've sent a confirmation email to {customerInfo.email}
-                  </p>
-                </div>
+                ))}
+              </div>
+            )}
 
-                <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                  <h4 className="font-semibold text-gray-900 mb-4">Appointment Details:</h4>
-                  <div className="space-y-3">
-                    <div className="flex items-center">
-                      <User className="w-5 h-5 text-gray-500 mr-3" />
-                      <span>{customerInfo.name}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Calendar className="w-5 h-5 text-gray-500 mr-3" />
-                      <span>{selectedService.name} - {selectedService.price}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="w-5 h-5 text-gray-500 mr-3" />
-                      <span>{selectedDate} at {selectedTime} ({selectedService.duration})</span>
-                    </div>
-                    <div className="flex items-center">
-                      <MapPin className="w-5 h-5 text-gray-500 mr-3" />
-                      <span>123 Main Street, Downtown, City</span>
+            {/* Step 4: Confirmation */}
+            {step === 4 && (
+              <div className="space-y-6">
+                <div className="bg-gray-50 p-6 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-4">Appointment Summary</h3>
+                  <div className="space-y-2">
+                    <p><span className="font-medium">Service:</span> {selectedService?.name}</p>
+                    <p><span className="font-medium">Date:</span> {selectedDate}</p>
+                    <p><span className="font-medium">Time:</span> {selectedTime}</p>
+                    <p><span className="font-medium">Barber:</span> {selectedBarber}</p>
+                    <p><span className="font-medium">Duration:</span> {selectedService?.duration}</p>
+                    <div className="border-t pt-2 mt-4">
+                      <p className="text-xl font-bold">Total: {selectedService?.price.toFixed(2)} ETB</p>
                     </div>
                   </div>
                 </div>
-
-                <div className="bg-blue-50 rounded-lg p-6 mb-8">
-                  <h4 className="font-semibold text-blue-900 mb-2">What to expect:</h4>
-                  <ul className="text-blue-800 space-y-1">
-                    <li>• Please arrive 10 minutes early</li>
-                    <li>• We'll send you a reminder 24 hours before your appointment</li>
-                    <li>• If you need to reschedule, please call us at least 4 hours in advance</li>
-                    <li>• Payment can be made in-store or online</li>
-                  </ul>
+                
+                <div className="space-y-4">
+                  <h3 className="font-semibold text-lg">Contact Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="name">Full Name</Label>
+                      <Input id="name" placeholder="Enter your name" />
+                    </div>
+                    <div>
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input id="phone" placeholder="Enter your phone" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <Label htmlFor="email">Email Address</Label>
+                      <Input id="email" type="email" placeholder="Enter your email" />
+                    </div>
+                  </div>
                 </div>
+              </div>
+            )}
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button className="flex-1 bg-blue-700 hover:bg-blue-800">
-                    Add to Calendar
-                  </Button>
-                  <Button variant="outline" className="flex-1">
-                    View My Bookings
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </section>
+            {/* Navigation Buttons */}
+            <div className="flex justify-between mt-8">
+              {step > 1 && (
+                <Button variant="outline" onClick={prevStep}>
+                  Previous
+                </Button>
+              )}
+              
+              {step < 4 ? (
+                <Button
+                  onClick={nextStep}
+                  disabled={
+                    (step === 1 && !selectedService) ||
+                    (step === 2 && (!selectedDate || !selectedTime)) ||
+                    (step === 3 && !selectedBarber)
+                  }
+                  className="ml-auto bg-blue-600 hover:bg-blue-700"
+                >
+                  Next
+                </Button>
+              ) : (
+                <Button className="ml-auto bg-orange-600 hover:bg-orange-700">
+                  Confirm & Pay {selectedService?.price.toFixed(2)} ETB
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <Footer />
     </div>
