@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Scissors } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -15,9 +15,11 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-700 rounded-md flex items-center justify-center">
-              <Scissors className="w-5 h-5 text-white" />
-            </div>
+            <img 
+              src="/lovable-uploads/608a4400-5443-43c4-8d44-27de9d023e0c.png" 
+              alt="Ashu's Barber Shop Logo" 
+              className="w-10 h-10 object-contain"
+            />
             <span className="text-xl font-bold text-blue-700">ASHU'S BARBER SHOP</span>
           </div>
 

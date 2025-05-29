@@ -9,7 +9,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div>
-            <h3 className="text-2xl font-bold text-blue-400 mb-4">ASHU'S BARBER SHOP</h3>
+            <div className="flex items-center space-x-2 mb-4">
+              <img 
+                src="/lovable-uploads/608a4400-5443-43c4-8d44-27de9d023e0c.png" 
+                alt="Ashu's Barber Shop Logo" 
+                className="w-12 h-12 object-contain"
+              />
+              <h3 className="text-2xl font-bold text-blue-400">ASHU'S BARBER SHOP</h3>
+            </div>
             <p className="text-gray-300 mb-4">
               Premium barbering services with style, precision, and professionalism. 
               Your style, our expertise.
