@@ -29,6 +29,9 @@ const Navigation = () => {
             <Link to="/services" className="text-gray-700 hover:text-blue-700 font-medium transition-colors">
               Services
             </Link>
+            <Link to="/store" className="text-gray-700 hover:text-blue-700 font-medium transition-colors">
+              Store
+            </Link>
             <Link to="/booking" className="text-gray-700 hover:text-blue-700 font-medium transition-colors">
               Book Now
             </Link>
@@ -73,6 +76,13 @@ const Navigation = () => {
                 onClick={toggleMenu}
               >
                 Services
+              </Link>
+              <Link
+                to="/store"
+                className="block px-3 py-2 text-gray-700 hover:text-blue-700 font-medium"
+                onClick={toggleMenu}
+              >
+                Store
               </Link>
               <Link
                 to="/booking"

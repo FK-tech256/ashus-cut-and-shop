@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,9 +6,16 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Calendar, Clock, User, Phone, Mail, MapPin, CheckCircle } from "lucide-react";
 
+interface Service {
+  name: string;
+  price: string;
+  duration: string;
+  popular?: boolean;
+}
+
 const Booking = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [customerInfo, setCustomerInfo] = useState({
@@ -18,7 +24,7 @@ const Booking = () => {
     phone: ""
   });
 
-  const services = [
+  const services: Service[] = [
     { name: "Classic Haircut", price: "$25", duration: "30 min" },
     { name: "Premium Cut & Style", price: "$35", duration: "45 min", popular: true },
     { name: "Beard Trim & Shape", price: "$20", duration: "25 min" },
@@ -37,7 +43,7 @@ const Booking = () => {
   const nextStep = () => setCurrentStep(prev => prev + 1);
   const prevStep = () => setCurrentStep(prev => prev - 1);
 
-  const handleServiceSelect = (service: any) => {
+  const handleServiceSelect = (service: Service) => {
     setSelectedService(service);
     nextStep();
   };
@@ -133,7 +139,7 @@ const Booking = () => {
           )}
 
           {/* Step 2: Date & Time Selection */}
-          {currentStep === 2 && (
+          {currentStep === 2 && selectedService && (
             <Card className="shadow-xl border-0">
               <CardHeader className="bg-blue-700 text-white">
                 <CardTitle className="text-2xl">Step 2: Select Date & Time</CardTitle>
@@ -198,7 +204,7 @@ const Booking = () => {
           )}
 
           {/* Step 3: Contact Information */}
-          {currentStep === 3 && (
+          {currentStep === 3 && selectedService && (
             <Card className="shadow-xl border-0">
               <CardHeader className="bg-blue-700 text-white">
                 <CardTitle className="text-2xl">Step 3: Contact Information</CardTitle>
@@ -268,7 +274,7 @@ const Booking = () => {
           )}
 
           {/* Step 4: Confirmation */}
-          {currentStep === 4 && (
+          {currentStep === 4 && selectedService && (
             <Card className="shadow-xl border-0">
               <CardHeader className="bg-green-600 text-white">
                 <CardTitle className="text-2xl flex items-center">
