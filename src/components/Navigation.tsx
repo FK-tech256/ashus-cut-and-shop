@@ -43,6 +43,9 @@ const Navigation = () => {
             <Link to="/contact" className="text-gray-700 hover:text-blue-700 font-medium transition-colors">
               Contact
             </Link>
+            <Link to="/admin" className="text-gray-700 hover:text-blue-700 font-medium transition-colors">
+              Admin
+            </Link>
             <Button className="bg-orange-600 hover:bg-orange-700 text-white">
               Book Appointment
             </Button>
@@ -106,6 +109,13 @@ const Navigation = () => {
                 onClick={toggleMenu}
               >
                 Contact
+              </Link>
+              <Link
+                to="/admin"
+                className="block px-3 py-2 text-gray-700 hover:text-blue-700 font-medium"
+                onClick={toggleMenu}
+              >
+                Admin
               </Link>
               <div className="px-3 py-2">
                 <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
